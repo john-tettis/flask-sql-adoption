@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block title %}Add pet{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-3 text-center">Add a new pet</h1>
+    <form  class = 'mx-5'action="" method="post">
+        {{ form.csrf_token }}
+        {% for field in form if field.widget.input_type != 'hidden'%}
+        {% if field.name == 'available'%}
+        <div class="form-check">
+            {{field(class_='form-check-input')}}
+            {{field.label(class_='form-check-label')}}
+        </div>
+        {% else %}
+        <div class="form-group">
+            {{field.label}}
+            {{field(class_="form-control")}}
+            {% for error in field.errors %}
+            <small class="text-danger">{{error}}</small>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <button class="btn btn-success btn-block mt-3">submit</button>
+    </form>
+</div>
+{% endblock %}
